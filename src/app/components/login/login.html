@@ -1,1 +1,18 @@
-<p>login works!</p>
+<div class="auth_card">
+    <div class="auth_header">
+        <h1 class="auth_title">Entrar</h1>
+        <p class="auth_subtitle">Faça login para acessar suas listas</p>
+    </div>
+    <form class="auth_form" (ngSubmit)="onLogin()">
+        <div class="form_group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" [(ngModel)]="loginData.email" placeholder="seuemail@exemplo.com" required>
+        </div>
+        <div class="form_group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" [(ngModel)]="loginData.password" placeholder="A tua senha" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+    </form>
+    <p class="auth_link">Ainda não tens uma conta? <a routerLink="/registo">Regista-te aqui</a></p>
+</div>
