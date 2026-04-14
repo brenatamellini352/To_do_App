@@ -1,34 +1,37 @@
-<button class="theme_toggle" (click)="toggle_theme()" title="Alternar tema">🌙</button>
+<button class="theme_toggle" (click)="toggle_theme()" title="Alternar tema">
+    {{ isDarkTheme ? '🌙' : '☀️' }}
+</button>
+
 <section class="container">
     <h1>Bem-vindo à sua lista de tarefas!</h1>
     <p>Organize seu dia a dia com facilidade.</p>
+
     <div class="task_input_container">
-        <input type="text" [(ngModel)]="newTaskTitle" placeholder="Adicione uma nova tarefa...">
+        <input 
+            type="text" 
+            class="task_input" 
+            [(ngModel)]="newTaskTitle" 
+            placeholder="Adicione uma nova tarefa..."
+            (keyup.enter)="add_task()">
         <button (click)="add_task()">+</button>
     </div>
+
     <ul class="task_list">
-        <li *ngFor="let task of tasks">
-            {{ task.text }} <span *ngIf="task.completed">✔️</span>
-        </li>
-    </ul>
-    <div class="progress_container">
-        <div class="progress_bar" [style.width.%]="progressValue"></div>
-    </div>
-    <ul id="task_list">
         @for (task of tasks; track task.id) {
         <li class="task_item">
             <div class="task_content">
                 @if (editingTaskId === task.id) {
-                <input type="text" [(ngModel)]="editingText" />
+                    <input type="text" class="editing_task_input" [(ngModel)]="editingText" (keyup.enter)="confirmEdit(task.id)" />
                 } @else {
-                <span [class.completed_task]="task.completed">{{ task.text }}</span>
+                    <span [class.completed_task]="task.completed">{{ task.text }}</span>
                 }
             </div>
+
             <div class="task_actions">
                 @if (editingTaskId === task.id) {
-                <button (click)="confirmEdit(task.id)">&#10004;</button>
+                    <button (click)="confirmEdit(task.id)">&#10004;</button>
                 } @else {
-                <button (click)="startEdit(task)">&#9998;</button>
+                    <button (click)="startEdit(task)">&#9998;</button>
                 }
                 <button (click)="deleteTask(task.id)">&#128465;</button>
                 <button (click)="toggleTask(task.id)">
@@ -39,7 +42,7 @@
         }
     </ul>
 
-    <div class="progress_bar_container">
-        <div id="progress_bar" [style.width.%]="progressValue"></div>
+    <div class="progress_container">
+        <div class="progress_bar" [style.width.%]="progressValue"></div>
     </div>
 </section>

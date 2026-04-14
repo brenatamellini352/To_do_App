@@ -13,9 +13,9 @@ import { ApiService, Task } from '../../services/api';
 })
 export class Home implements OnInit {
   tasks: Task[] = [];
-  newTaskTitle = '';
+  newTaskTitle: string = '';
   editingTaskId: number | null = null;
-  editingText = '';
+  editingText: string = '';
   isDarkTheme = false;
 
   constructor(private api: ApiService, private router: Router) {}
@@ -26,9 +26,11 @@ export class Home implements OnInit {
     this.isDarkTheme = saved !== 'light';
   }
 
-  loadTasks(): void {
-    this.tasks = this.api.getTasks();
-  }
+ loadTasks(): void {
+  // Atribuir o retorno da API diretamente à variável do componente
+  this.tasks = [...this.api.getTasks()]; 
+  console.log('Tarefas carregadas:', this.tasks); // Adicione esse log para testar
+}
 
   add_task(): void {
     if (!this.newTaskTitle.trim()) return;

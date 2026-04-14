@@ -1,0 +1,134 @@
+.auth_page {
+    background: var (--bg-image);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+   min-height: 100vh;
+}
+
+.auth_card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--container-bg);
+    border: 2px solid var(--container-border);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem 2rem 1.5rem;
+    transition: background 0.4s, border 0.4s; 
+}
+
+.auth_header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.auth_title {
+    font-size: 2rem;
+    color: var(--h1-color);
+    margin-bottom: .35rem;
+    transition: color 0.3s;
+}
+
+.auth_subtitle {
+    font-size: .9rem;
+    color: var(--input-placeholder);
+}
+
+.auth_form {
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+.form_group label {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--input-placeholder);
+    letter-spacing: .03em;
+}
+.form_group input {
+    padding: 8px 16px;
+    height: 42px;
+    border-radius: 50px;
+    border: 2px solid var(--task-border);
+    background: var(--input-bg);
+    color: var(--input-text);
+    transition: border-color 0.2s, background 0.3s;
+    outline: none;
+    width: 100%;
+}
+
+.form_group input::placeholder {
+    color: var(--input-placeholder);
+    opacity: .6;
+}
+.form_group input:focus {
+    border-color: #ff4800;
+}
+
+.form_group input.input_error {
+    border-color: #e24b4a;
+}
+
+.field_error {
+    font-size: .78rem;
+    color: #e24b4a;
+    padding-left: 12px;
+    min-height: 1rem;
+}
+
+.form_error {
+    background: rgba(226, 75, 74, .15);
+    border: 1px solid rgba(226, 75, 74, .4);
+    color: #e24b4a;
+    padding: .6rem 1rem;
+    font-size: .875rem;
+    text-align: center;
+}
+
+.btn {
+    height: 42px;
+    border-radius: 50px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn_primary {
+    background-color: var(--btn-add-bg);
+    color: var(--btn-add-color);
+}
+
+.btn_primary:hover {
+    background-color: #ff4800;
+}
+
+.btn-full {
+    width: 100%;
+    margin-top: .25rem;
+}
+
+.auth_link {
+    text-align: center;
+    margin-top: 1.25rem;
+    font-size: .875rem;
+    color: var(--input-placeholder);
+}
+
+.auth_link a {
+    color: var(--h1-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth_link a:hover {
+    text-decoration: underline;
+}
