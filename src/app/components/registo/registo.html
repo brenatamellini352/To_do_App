@@ -1,1 +1,26 @@
-<p>registo works!</p>
+<div class="auth_card">
+    <div class="auth_header">
+        <h1 class="auth_title">Criar Conta</h1>
+        <p class="auth_subtitle">Cria uma conta para começar a organizar as tuas listas.</p>
+    </div>
+    <form class="auth_form" (ngSubmit)="onRegisto()">
+        <div class="form_group">
+            <label for="name">Nome</label>
+            <input type="text" name="name" [(ngModel)]="registoData.name" placeholder="O teu nome" required>
+        </div>
+        <div class="form_group">
+            <label for="email">Email</label>
+            <input type="email" name="email" [(ngModel)]="registoData.email" placeholder="seu@email.com" required>
+        </div>
+        <div class="form_group">
+            <label for="password">Senha</label>
+            <input type="password" name="password" [(ngModel)]="registoData.password" placeholder="A tua senha" required>
+        </div>
+        <div class="form_group">
+            <label for="confirm_password">Confirmar Senha</label>
+            <input type="password" name="confirm_password" [(ngModel)]="registoData.confirmPassword" placeholder="Confirma a tua senha" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Criar Conta</button>
+    </form>
+    <p class="auth_link">Já tens uma conta? <a routerLink="/login">Faz Login</a></p>
+</div>
