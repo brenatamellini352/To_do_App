@@ -95,4 +95,17 @@ export class Home implements OnInit {
     this.api.logout();
     this.router.navigate(['/login']);
   }
+
+  get greeting(): string {
+    const hour = new Date().getHours();
+    const user = this.api.getCurrentUser();
+    const name = user?.name || 'utilizador';
+
+    let period = '';
+    if (hour >= 6 && hour < 12) period = 'Bom dia';
+    else if (hour >= 12 && hour < 19) period = 'Boa tarde';
+    else period = 'Boa noite';
+
+    return `${period}, ${name}! 👋`;
+  }
 }

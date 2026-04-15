@@ -5,11 +5,15 @@
   <button class="theme_toggle" (click)="goToMinhasListas()" title="Minhas Listas">
     📋
   </button>
+   <button class="theme_toggle" (click)="logout()" title="Sair">
+    🚪
+  </button>
 </div>
 
 <section class="container">
     <div class="home_header">
         <div>
+            <div class="greeting">{{ greeting }}</div>
             <h1>Bem-vindo à sua lista de tarefas!</h1>
             <p>Organize seu dia a dia com facilidade.</p>
         </div>
