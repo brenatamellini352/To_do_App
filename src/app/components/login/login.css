@@ -141,3 +141,25 @@
 }
 .msg_success { background: #d4edda; color: #155724; }
 .msg_error   { background: #f8d7da; color: #721c24; }
+.theme_toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  z-index: 999;
+}
+
+.theme_toggle:hover {
+  background: rgba(0, 0, 0, 0.6);
+}

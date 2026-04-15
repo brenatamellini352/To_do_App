@@ -98,7 +98,26 @@ h1 {
     margin-bottom: 16px;
     align-items: center;
 }
-
+.list_title_container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: center;
+}
+.list_title_container input {
+    flex: 1;
+    padding: 8px 20px;
+    height: 40px;
+    border-radius: 50px;
+    border: 2px solid var(--task-border);
+    background: var(--input-bg);
+    color: var(--input-text);
+    font-size: 16px;
+    transition: background 0.3s, border 0.3s, color 0.3s;
+}
+.list_title_container input::placeholder {
+    color: var(--input-placeholder);
+}
 .task_input {
     flex: 1;
     padding: 8px 20px;
