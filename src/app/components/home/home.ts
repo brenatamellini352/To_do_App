@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApiService, Task } from '../../services/api';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-home',
@@ -15,22 +16,24 @@ export class Home implements OnInit {
   tasks: Task[] = [];
   newTaskTitle: string = '';
   editingTaskId: number | null = null;
-  editingText: string = '';
-  isDarkTheme = false;
+  editingText = '';
+  listTitle = '';
+  saveMessage = '';
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    public theme: Theme
+  ) { }
 
   ngOnInit(): void {
+    this.theme.init();
     this.loadTasks();
-    const saved = localStorage.getItem('theme');
-    this.isDarkTheme = saved !== 'light';
   }
 
- loadTasks(): void {
-  // Atribuir o retorno da API diretamente à variável do componente
-  this.tasks = [...this.api.getTasks()]; 
-  console.log('Tarefas carregadas:', this.tasks); // Adicione esse log para testar
-}
+  loadTasks(): void {
+    this.tasks = [...this.api.getTasks()];
+  }
 
   add_task(): void {
     if (!this.newTaskTitle.trim()) return;
@@ -68,10 +71,24 @@ export class Home implements OnInit {
     return Math.round((this.tasks.filter(t => t.completed).length / this.tasks.length) * 100);
   }
 
-  toggle_theme(): void {
-    this.isDarkTheme = !this.isDarkTheme;
-    localStorage.setItem('theme', this.isDarkTheme ? 'dark' : 'light');
-    document.body.setAttribute('data-theme', this.isDarkTheme ? '' : 'light');
+  saveList(): void {
+    if (!this.listTitle.trim()) {
+      this.saveMessage = 'Dá um título para a lista antes de guardar.';;
+      return;
+    }
+    if (!this.tasks.length) {
+      this.saveMessage = 'Adiciona pelo menos uma tarefa antes de guardar.';
+      setTimeout(() => this.saveMessage = '', 3000);
+      return;
+    }
+    this.api.createList(this.listTitle.trim(), this.tasks.map(t => t.id));
+    this.saveMessage = `Lista "${this.listTitle}" guardada com sucesso! ✅`;
+    this.listTitle = '';
+    setTimeout(() => this.saveMessage = '', 3000);
+  }
+
+  goToMinhasListas(): void {
+    this.router.navigate(['/minhas-listas']);
   }
 
   logout(): void {

@@ -20,6 +20,14 @@ export interface ApiResult<T = User> {
   user?: T;
 }
 
+export interface TaskList {
+  id: string;
+  userId: string;
+  title: string;
+  createdAt: number;
+  taskIds: number[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 
@@ -59,6 +67,40 @@ export class ApiService {
 
   private saveAllTasks(tasks: Task[]): void {
     localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+  
+  // --- Listas ---
+
+  getLists(): TaskList[] {
+    const user = this.getCurrentUser();
+    if (!user) return [];
+    const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    return all.filter(l => l.userId === user.id);
+  }
+
+  private saveAllLists(lists: TaskList[]): void {
+    localStorage.setItem('taskLists', JSON.stringify(lists));
+  }
+
+  createList(title: string, taskIds: number[]): TaskList | null {
+    const user = this.getCurrentUser();
+    if (!user) return null;
+    const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    const newList: TaskList = {
+      id: Date.now().toString(),
+      userId: user.id,
+      title,
+      createdAt: Date.now(),
+      taskIds
+    };
+    all.push(newList);
+    this.saveAllLists(all);
+    return newList;
+  }
+
+  deleteList(id: string): void {
+    const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    this.saveAllLists(all.filter(l => l.id !== id));
   }
 
   addTask(text: string): Task | null {
