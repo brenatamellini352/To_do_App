@@ -132,3 +132,13 @@
 .auth_link a:hover {
     text-decoration: underline;
 }
+
+.msg {
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.msg_success { background: #d4edda; color: #155724; }
+.msg_error   { background: #f8d7da; color: #721c24; }

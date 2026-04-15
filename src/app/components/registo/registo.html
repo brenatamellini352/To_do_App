@@ -1,8 +1,20 @@
+<button class="theme_toggle" (click)="theme.toggle()" title="Alternar tema">
+    {{ theme.isDarkTheme ? '🌙' : '☀️' }}
+</button>
+
 <div class="auth_card">
     <div class="auth_header">
         <h1 class="auth_title">Criar Conta</h1>
         <p class="auth_subtitle">Cria uma conta para começar a organizar as tuas listas.</p>
     </div>
+    
+        @if (sucessMessage) {
+            <div class="msg msg-success">{{ sucessMessage }}</div>
+        }
+        @if (errorMensage) {
+            <div class="msg msg-error">{{ errorMensage }}</div>
+        }
+
     <form class="auth_form" (ngSubmit)="onRegisto()">
         <div class="form_group">
             <label for="name">Nome</label>

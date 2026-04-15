@@ -1,8 +1,18 @@
+<button class="theme_toggle" (click)="theme.toggle()"Alterar Tema>
+    {{ theme.isDarkTheme ? '🌙' : '☀️' }}
+</button>
+
 <div class="auth_card">
     <div class="auth_header">
         <h1 class="auth_title">Entrar</h1>
         <p class="auth_subtitle">Faça login para acessar suas listas</p>
     </div>
+    @if (sucessMessage) {
+        <div class="msg msg-success">{{ sucessMessage }}</div>
+    }
+    @if (errorMensage) {
+        <div class="msg msg-error">{{ errorMensage }}</div>
+    }
     <form class="auth_form" (ngSubmit)="onLogin()">
         <div class="form_group">
             <label for="email">Email</label>

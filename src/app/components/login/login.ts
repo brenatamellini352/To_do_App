@@ -1,39 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; 
-import { Router, RouterModule } from '@angular/router'; 
-import { ApiService } from '../../services/api'; 
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { ApiService } from '../../services/api';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-login',
-  standalone: true, 
+  standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
+
 export class Login {
-  loginData = {
-    email: '',
-    password: ''
-  };
+  loginData = { email: '', password: '' };
+  errorMensage = '';
+  sucessMessage = '';
 
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    public theme: Theme) { }
 
-  constructor(private api: ApiService, private router: Router) {}
+    ngOnInit(): void {
+    this.theme.init();
+  }
 
   onLogin() {
-    console.log('Botão de login clicado!', this.loginData);
+    this.errorMensage = '';
+    this.sucessMessage = '';
+    
+    if (!this.loginData.email || !this.loginData.password) {
+      this.errorMensage = 'Por favor, preencha todos os campos.';
+      return;
+    }
 
-  
     const result = this.api.login(this.loginData.email, this.loginData.password);
 
     if (result.ok) {
-      console.log('Login bem-sucedido!');
-      
-     
-      this.router.navigate(['/home']); 
+      const name = result.user?.name || 'Utilizador';
+      this.sucessMessage = `Bem-vindo de volta, ${name}!`;
+      setTimeout(() => { this.router.navigate(['/home']); }, 1500);
     } else {
-     
-      alert(result.message || 'Erro ao fazer login. Verifique seus dados.');
+
+      this.errorMensage = result.message || 'Erro ao fazer login. Verifique seus dados e tente novamente.';
     }
   }
 }

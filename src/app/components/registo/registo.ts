@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { ApiService } from '../../services/api'; // Verifique se o caminho está correto
+import { ApiService } from '../../services/api';
+import { Theme } from '../../services/theme';
 
 @Component({
   selector: 'app-registo',
@@ -11,39 +12,51 @@ import { ApiService } from '../../services/api'; // Verifique se o caminho está
   templateUrl: './registo.html',
   styleUrl: './registo.css'
 })
-export class Registo {
-  registoData = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  };
+export class Registo implements OnInit {
+  registoData = { name: '', email: '', password: '', confirmPassword: '' };
+  errorMensage = '';
+  sucessMessage = '';
 
-  // Precisamos do constructor para usar o serviço e o roteador
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    public theme: Theme) { }
+
+  ngOnInit(): void {
+    this.theme.init();
+  }
 
   onRegisto() {
-    console.log('Dados enviados para o registo:', this.registoData);
+    this.errorMensage = '';
+    this.sucessMessage = '';
+
+    if (!this.registoData.name || !this.registoData.email || !this.registoData.password || !this.registoData.confirmPassword) {
+      this.errorMensage = 'Por favor, preencha todos os campos.';
+      return;
+    }
     
-    // 1. Validação de senha
-    if (this.registoData.password !== this.registoData.confirmPassword) {
-      alert('As senhas não coincidem!');
+    if (this.registoData.password.length < 6) {
+      this.errorMensage = 'A senha deve ter pelo menos 6 caracteres.';
       return;
     }
 
-    // 2. CHAMADA AO SERVIÇO (O que estava faltando!)
+    if (this.registoData.password !== this.registoData.confirmPassword) {
+      this.errorMensage = 'As senhas não coincidem.';
+      return;
+    }
+
     const result = this.api.register(
       this.registoData.name,
       this.registoData.email,
       this.registoData.password
     );
 
-    // 3. Resposta ao usuário
     if (result.ok) {
-      alert('Utilizador criado com sucesso!');
-      this.router.navigate(['/login']); // Vai para a tela de login
+      this.sucessMessage = `Registo criado com sucesso! Bem-vindo, ${this.registoData.name}! A redirecionar para login...`;
+      setTimeout(() => { this.router.navigate(['/login']); }, 1800);
     } else {
-      alert(result.message); // Ex: "Email já registado"
+      this.errorMensage = result.message || 'Erro ao criar registo. Verifique seus dados e tente novamente.';
+      // alert(result.message); // Ex: "Email já registado"
     }
   }
 }
