@@ -1,7 +1,10 @@
 <div class="top_actions">
-    <button class="theme_toggle" (click)="theme.toggle()" title="Alternar tema">
-        {{ theme.isDarkTheme ? '🌙' : '☀️' }}
-    </button>   
+  <button class="theme_toggle" (click)="theme.toggle()" title="Alternar tema">
+    {{ theme.isDarkTheme ? '🌙' : '☀️' }}
+  </button>
+  <button class="theme_toggle" (click)="goToMinhasListas()" title="Minhas Listas">
+    📋
+  </button>
 </div>
 
 <section class="container">

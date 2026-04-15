@@ -1,1 +1,48 @@
-<p>minhas-listas works!</p>
+<button class="theme_toggle" (click)="theme.toggle()" title="Alternar tema">
+  {{ theme.isDarkTheme ? '🌙' : '☀️' }}
+</button>
+
+<section class="container">
+  <div class="home_header">
+    <div>
+      <h1>📋 Minhas Listas</h1>
+      <p>Todas as tuas listas guardadas.</p>
+    </div>
+    <button class="btn_secondary" (click)="goHome()">← Voltar</button>
+  </div>
+
+  @if (!lists.length) {
+    <div class="empty_state">
+      <p>Ainda não tens listas guardadas.</p>
+      <button class="btn_secondary" (click)="goHome()">Criar uma lista</button>
+    </div>
+  }
+
+  <div class="lists_grid">
+    @for (list of lists; track list.id) {
+    <div class="list_card">
+      <div class="list_card_header" (click)="toggleExpand(list.id)">
+        <div>
+          <h2 class="list_card_title">{{ list.title }}</h2>
+          <span class="list_card_date">{{ formatDate(list.createdAt) }}</span>
+        </div>
+        <div class="list_card_actions">
+          <span class="task_count">{{ getTasksForList(list).length }} tarefas</span>
+          <button class="btn_icon" (click)="deleteList(list.id); $event.stopPropagation()">🗑️</button>
+          <span class="expand_icon">{{ expandedListId === list.id ? '▲' : '▼' }}</span>
+        </div>
+      </div>
+
+      @if (expandedListId === list.id) {
+      <ul class="list_card_tasks">
+        @for (task of getTasksForList(list); track task.id) {
+        <li [class.completed_task]="task.completed">
+          {{ task.completed ? '✅' : '⬜' }} {{ task.text }}
+        </li>
+        }
+      </ul>
+      }
+    </div>
+    }
+  </div>
+</section>

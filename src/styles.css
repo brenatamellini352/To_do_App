@@ -51,7 +51,7 @@ body {
 
 /* ===== BOTÃO TEMA ===== */
 .theme_toggle {
-    position: fixed;
+    
     top: 16px;
     right: 16px;
     height: 38px;
