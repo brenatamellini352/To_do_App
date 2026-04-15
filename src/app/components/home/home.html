@@ -1,39 +1,44 @@
 <div class="top_actions">
-  <button class="theme_toggle" (click)="theme.toggle()" title="Alternar tema">
-    {{ theme.isDarkTheme ? '🌙' : '☀️' }}
-  </button>
-  <button class="theme_toggle" (click)="goToMinhasListas()" title="Minhas Listas">
-    📋
-  </button>
-   <button class="theme_toggle" (click)="logout()" title="Sair">
-    🚪
-  </button>
+    <button class="theme_toggle" (click)="theme.toggle()" title="Alternar tema">
+        {{ theme.isDarkTheme ? '🌙' : '☀️' }}
+    </button>
+    <button class="theme_toggle" (click)="goToMinhasListas()" title="Minhas Listas">
+        📋
+    </button>
+    <button class="theme_toggle" (click)="logout()" title="Sair">
+        🚪
+    </button>
 </div>
 
 <section class="container">
     <div class="home_header">
-        <div>
-            <h1>Bem-vindo à sua lista de tarefas!</h1>
-            <div class="greeting">{{ greeting }}</div> 
-            <p>Organize seu dia a dia com facilidade.</p>
-        </div>
+        <h1>Bem-vindo à sua lista!</h1>
+        <div class="greeting">{{ greeting }}</div>
     </div>
 
+    @if (isEditingTitle) {
     <div class="list_title_container">
         <input 
-        type="text" 
-        class="list_title_input" 
-        [(ngModel)]="listTitle" 
-        placeholder="Dá um título à lista... (ex: Compras, Trabalho)" />
+            type="text" 
+            class="list_title_input" 
+            [(ngModel)]="listTitle"
+            placeholder="Dá um título à lista... (ex: Compras, Trabalho)" />
+        <button class ="btn_confirm_title" (click)="confirmTitle()" title="Confirmar título">✔️</button>
     </div>
+    } @else {
+        <div class="list_title_display" (click)="isEditingTitle = true" title="Editar título">
+             <span>{{ listTitle }}</span>
+             <span class="edit_title_icon">✏️</span>
+        </div>
+    }
 
     <div class="task_input_container">
         <input 
-        type="text" 
-        class="task_input" 
-        [(ngModel)]="newTaskTitle" 
-        placeholder="Adicione um novo item..."
-        (keyup.enter)="add_task()">
+            type="text" 
+            class="task_input" 
+            [(ngModel)]="newTaskTitle" 
+            placeholder="Adicione um novo item..."
+            (keyup.enter)="add_task()">
         <button (click)="add_task()">+</button>
     </div>
 
@@ -69,11 +74,12 @@
     </div>
 
     <div class="save_list_container">
-    @if (saveMessage) {
-      <p class="save_message">{{ saveMessage }}</p>
-    }
-    <button class="btn_save_list" (click)="saveList()" [disabled]="!tasks.length">
-      💾 Guardar Lista
-    </button>
-  </div>
+        @if (saveMessage) {
+        <p class="save_message">{{ saveMessage }}</p>
+        }
+        <button class="btn_new_list" (click)="newList()" title="Limpar e começar nova lista ">🆕 Nova Lista</button>
+        <button class="btn_save_list" (click)="saveList()" [disabled]="!tasks.length">
+            💾 Guardar Lista
+        </button>
+    </div>
 </section>

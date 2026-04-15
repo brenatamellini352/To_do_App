@@ -18,6 +18,7 @@ export class Home implements OnInit {
   editingTaskId: number | null = null;
   editingText = '';
   listTitle = '';
+  isEditingTitle = true;
   saveMessage = '';
 
   constructor(
@@ -73,7 +74,8 @@ export class Home implements OnInit {
 
   saveList(): void {
     if (!this.listTitle.trim()) {
-      this.saveMessage = 'Dá um título para a lista antes de guardar.';;
+      this.saveMessage = 'Dá um título para a lista antes de guardar.';
+      setTimeout(() => this.saveMessage = '', 3000);
       return;
     }
     if (!this.tasks.length) {
@@ -87,6 +89,20 @@ export class Home implements OnInit {
     setTimeout(() => this.saveMessage = '', 3000);
   }
 
+  newList(): void {
+    this.listTitle = '';
+    this.isEditingTitle = true;
+    const currentTasks = this.api.getTasks();
+    currentTasks.forEach(t => this.api.deleteTask(t.id));
+    this.loadTasks();
+    this.saveMessage = '';
+  }
+
+  confirmTitle(): void {
+    if (this.listTitle.trim()) {
+      this.isEditingTitle = false;
+    }
+  }
   goToMinhasListas(): void {
     this.router.navigate(['/minhas-listas']);
   }

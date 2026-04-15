@@ -13,3 +13,132 @@
   margin-bottom: 4px;
   opacity: 0.85;
 }
+/* ===== TÍTULO DA LISTA ===== */
+.list_title_container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.list_title_input {
+  flex: 1;
+  padding: 8px 20px;
+  height: 40px;
+  border-radius: 50px;
+  border: 2px solid var(--task-border);
+  background: var(--input-bg);
+  color: var(--input-text);
+  font-size: 15px;
+  transition: background 0.3s, border 0.3s;
+  outline: none;
+}
+
+.list_title_input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.list_title_input:focus {
+  border-color: #ff4800;
+}
+
+.btn_confirm_title {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #639922;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: filter 0.2s;
+}
+
+.btn_confirm_title:hover {
+  filter: brightness(0.85);
+}
+
+.list_title_display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  padding: 6px 16px;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.08);
+  border: 2px dashed var(--task-border);
+  transition: background 0.2s;
+}
+
+.list_title_display span:first-child {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--h1-color);
+}
+
+.edit_title_icon {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.list_title_display:hover {
+  background: rgba(255,255,255,0.14);
+}
+
+/* ===== BOTÕES GUARDAR / NOVA LISTA ===== */
+.save_list_container {
+  margin-top: 16px;
+}
+
+.list_actions_row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn_save_list,
+.btn_new_list {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 50px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s, opacity 0.2s;
+}
+
+.btn_save_list {
+  background: #639922;
+  color: #fff;
+}
+
+.btn_new_list {
+  background: var(--btn-add-bg);
+  color: var(--btn-add-color);
+}
+
+.btn_save_list:hover,
+.btn_new_list:hover {
+  filter: brightness(0.85);
+}
+
+.btn_save_list:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.save_message {
+  font-size: 0.88rem;
+  color: var(--task-text);
+  margin-bottom: 8px;
+  text-align: center;
+  opacity: 0.85;
+}
