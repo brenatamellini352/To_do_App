@@ -25,7 +25,7 @@ export interface TaskList {
   userId: string;
   title: string;
   createdAt: number;
-  taskIds: number[];
+  tasks: Task[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -68,7 +68,7 @@ export class ApiService {
   private saveAllTasks(tasks: Task[]): void {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
-  
+
   // --- Listas ---
 
   getLists(): TaskList[] {
@@ -82,7 +82,7 @@ export class ApiService {
     localStorage.setItem('taskLists', JSON.stringify(lists));
   }
 
-  createList(title: string, taskIds: number[]): TaskList | null {
+  createList(title: string, tasks: Task[]): TaskList | null {
     const user = this.getCurrentUser();
     if (!user) return null;
     const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
@@ -91,18 +91,12 @@ export class ApiService {
       userId: user.id,
       title,
       createdAt: Date.now(),
-      taskIds
+      tasks: tasks.map(t => ({ ...t }))
     };
     all.push(newList);
     this.saveAllLists(all);
     return newList;
   }
-
-  deleteList(id: string): void {
-    const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
-    this.saveAllLists(all.filter(l => l.id !== id));
-  }
-
   addTask(text: string): Task | null {
     const user = this.getCurrentUser();
     if (!user) return null;
@@ -130,5 +124,29 @@ export class ApiService {
     const task = all.find(t => t.id === id);
     if (task) task.completed = !task.completed;
     this.saveAllTasks(all);
+  }
+
+  updateList(id: string, tasks: Task[]): void {
+    const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    const list = all.find(l => l.id === id);
+    if (list) {
+      list.tasks = tasks.map(t => ({ ...t }));
+      this.saveAllLists(all);
+    }
+  }
+
+  toggleListTask(listId: string, taskId: number): void {
+    const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    const list = all.find(l => l.id === listId);
+    if (list) {
+      const task = list.tasks.find(t => t.id === taskId);
+      if (task) task.completed = !task.completed;
+      this.saveAllLists(all);
+    }
+  }
+
+  deleteList(id: string): void {
+    const all: TaskList[] = JSON.parse(localStorage.getItem('taskLists') || '[]');
+    this.saveAllLists(all.filter(l => l.id !== id));
   }
 }

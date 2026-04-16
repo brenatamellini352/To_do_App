@@ -83,19 +83,25 @@ export class Home implements OnInit {
       setTimeout(() => this.saveMessage = '', 3000);
       return;
     }
-    this.api.createList(this.listTitle.trim(), this.tasks.map(t => t.id));
-    this.saveMessage = `Lista "${this.listTitle}" guardada com sucesso! ✅`;
-    this.listTitle = '';
+    this.api.createList(this.listTitle.trim(), this.tasks);
+    this.saveMessage = `Lista "${this.listTitle}" guardada! ✅`;
     setTimeout(() => this.saveMessage = '', 3000);
   }
 
   newList(): void {
-    this.listTitle = '';
-    this.isEditingTitle = true;
+    // guarda automaticamente se tiver título e tarefas
+    if (this.listTitle.trim() && this.tasks.length) {
+      this.api.createList(this.listTitle.trim(), this.tasks);
+    }
+
+    // limpa APENAS as tarefas da home (pool temporário)
     const currentTasks = this.api.getTasks();
     currentTasks.forEach(t => this.api.deleteTask(t.id));
-    this.loadTasks();
+
+    this.listTitle = '';
+    this.isEditingTitle = true;
     this.saveMessage = '';
+    this.loadTasks();
   }
 
   confirmTitle(): void {
